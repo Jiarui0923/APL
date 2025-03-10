@@ -1,0 +1,55 @@
+{
+    "server_name": "local",
+    "task_queue": {
+        "layouts": [
+            {
+                "cpu": 1,
+                "cuda": 0
+            },
+            {
+                "cpu": 7,
+                "cuda": 0
+            }
+        ]
+    },
+    "authenticator": {
+        "type": "memory",
+        "credentials": {
+            "GWVavZ": {
+                "key": "lBYoKOtgSTcCwsyMuXhLj7pr",
+                "access": [
+                    "*"
+                ]
+            }
+        }
+    },
+    "iolib": {
+        "file": "iolib.json"
+    },
+    "cache": {
+        "type": "memory",
+        "hash": "MD5"
+    },
+    "modules": [
+        "aplsuite.aplmhc_combine",
+        "aplsuite.apl_aggregate",
+        "aplsuite.apl_peptide",
+        "aplsuite.apl_residue",
+        "aplsuite.aplmhc_aggregate",
+        "aplsuite.bfactor",
+        "aplsuite.build_mers",
+        "aplsuite.corex",
+        "aplsuite.get_pdb",
+        "aplsuite.get_seq",
+        "aplsuite.list_chain",
+        "aplsuite.mhcii",
+        "aplsuite.mmcif_to_pdb",
+        "aplsuite.regular_mers",
+        "aplsuite.sasa",
+        "aplsuite.select_chain",
+        "aplsuite.seq_entropy",
+        "ncbiblast.blast"
+    ],
+    "analystics": "./janalytics.json",
+    "initialized": false
+}

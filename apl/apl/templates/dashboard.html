@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div style="min-height: 100vh;">
+    <div class="container mb-6 mt-6 ">
+        <div class="media">
+            <figure class="media-left">
+              <p class="image is-48x48">
+                <img src="{% static 'images/apl.png' %}" />
+              </p>
+            </figure>
+            <div class="media-content">
+              {% comment %} <p class="title is-3">APL</p> {% endcomment %}
+              <p class="title is-3">Antigen Processing Likelihood</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-one-fifth">
+                <aside class="menu">
+                    <p class="menu-label">DASHBOARD</p>
+                    <ul class="menu-list">
+                      <li><a {% if page == 'private-projects' %}class="is-active" {% else %} href="{% url 'projects' %}" {% endif %}><i class="fa-solid fa-flask"></i>&nbsp;Projects</a></li>
+                      <li><a {% if page == 'private-workflows' %}class="is-active"{% else %} href="{% url 'workflows' %}" {% endif %}><i class="fas fa-code-branch"></i>&nbsp;Toolbox</a></li>
+                      <li><a {% if page == 'private-resources' %}class="is-active"{% else %} href="{% url 'resources' %}"{% endif %}><i class="fa-solid fa-server"></i>&nbsp;Resources</a></li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="column">
+                {% block dashboard_content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}APL{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{% static 'images/icon.ico' %}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        {% block header_ext %}
+        {% endblock %}
+    </head>
+    <body style="min-height: 100vh;">
+        {% comment %} <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="{% url 'index' %}">
+                    <img src="{% static 'images/apl.png' %}">
+                </a>
+                <a class="navbar-item" href="https://tulane.edu/">
+                    <img src="{% static 'images/tulane_long.png' %}">
+                </a>
+            </div>
+        </nav> {% endcomment %}
+
+        {% block content %}
+        {% endblock %}
+
+        <footer class="footer">
+            <div class="container content has-text-centered">
+                <article>
+                    <img src="{% static 'images/apl_long.png' %}" width="256">
+                    <img src="{% static 'images/tulane_long.png' %}" width="96">
+
+                    <p>
+                        Copyright &copy; 2024 Jellyroll (<a href="jellyroll.cs.tulane.edu">jellyroll.cs.tulane.edu</a>) All rights reserved.
+                    </p>
+                </article>
+            </div>
+        </footer>
+
+    </body>
+</html>

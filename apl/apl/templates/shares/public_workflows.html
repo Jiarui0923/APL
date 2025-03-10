@@ -1,0 +1,71 @@
+{% extends "dashboard.html" %}
+{% load static %}
+
+{% block dashboard_content %}
+<div class="container mb-2">
+  <div class="card">
+    <div class="card-content">
+      <p class="title is-4"><span class="has-text-link"><i class="fas fa-search"></i></span> Search Tool Market</p>
+      <form method="get" action="" id="page-update">
+        <div class="field has-addons">
+          <div class="control is-fullwidth is-expanded">
+            <input class="input is-rounded" type="text" placeholder="Search Tools" value="{{ search_key }}" name="search">
+          </div>
+          <div class="control">
+            <button class="button is-primary-dark is-rounded">
+              <span class="icon">
+                <i class="fas fa-search" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </form>
+      <span class="has-text-grey ml-4">{{ search_info }}</span>
+    </div>
+  </div>
+</div>
+<div class="container pl-6 pr-6 mt-1 mb-2">
+  <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+      {% if previous_offset >= 0 %}
+      <button class="pagination-previous" form="page-update" name="offset" value="{{ previous_offset }}"><i class="fa-solid fa-arrow-left"></i></button>
+      {% else %}
+      <button class="pagination-previous" disabled><i class="fa-solid fa-arrow-left"></i></button>
+      {% endif %}
+      {% if next_offset %}
+      <button class="pagination-next" form="page-update" name="offset" value="{{ next_offset }}"><i class="fa-solid fa-arrow-right"></i></button>
+      {% else %}
+      <button class="pagination-next" disabled><i class="fa-solid fa-arrow-right"></i></button>
+      {% endif %}
+      
+      <ul class="pagination-list">
+      <li><a class="pagination-link">{{ current_page }}/{{ total_page }}</a></li>
+      </ul>
+  </nav>
+</div>
+<div class="fixed-grid has-3-cols has-1-cols-mobile">
+    <div class="grid">
+        {% for workflow in workflows %}
+        <div class="cell">
+          <div class="card">
+              <div class="card-content">
+                  <div class="content">
+                    <h2 class="subtitle is-4">
+                      <span class="has-text-link"><i class="fas fa-code-branch"></i></span>
+                      {{ workflow.name }}
+                    </h2>
+                    <span class="has-text-grey">{{ workflow.numblock }} blocks</span>
+                    <br />
+                    {{ workflow.desc }}
+                  </div>
+              </div>
+              <footer class="card-footer">
+                <a href="{{ workflow.id }}/add/" class="card-footer-item has-text-success">
+                  <i class="fa-solid fa-plus"></i>
+                </a>
+              </footer>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

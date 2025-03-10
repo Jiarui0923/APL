@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block header_ext %}
+{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="columns">
+        <div class="column is-three-quarters">
+            <p class='m-0 mb-2'>
+                <a href="{% url 'workflows' %}">
+                    <button class="button is-ghost p-0 m-0">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>&nbsp;Dashboard
+                    </button>
+                </a>
+            </p>
+            <p class="title is-3">
+                <i class="fas fa-code-branch"></i> <span id="workflow-title">Tool</span>
+            </p>
+            <div class="card">
+                <div class="card-content" style="height: 80vh; overflow-y: auto; scrollbar-width: none;">
+                    <p>
+                        <span class="tag is-warning">input (required)</span>
+                        <span class="tag">input (optional)</span>
+                        <span class="tag is-success">output</span>
+                    </p>
+                    <div class="table-container">
+                        <table class="table is-hoverable is-fullwidth is-striped" id="blocks-table">
+                            <thead id="blocks-header">
+                            </thead>
+                            <tfoot id = "blocks-io">
+                            </tfoot>
+                            <tbody id="blocks-body">
+                            </tbody>
+                        </table>
+                        <div class="card has-background-grey-lighter is-shadowless mt-2" id="blocks-table-empty">
+                            <div class="card-content">
+                                  <div class="content has-text-centered m-6">
+                                    <h2 class="title is-2">
+                                      <span class="icon is-large">
+                                        <i class="fa-solid fa-plus "></i>
+                                      </span> 
+                                    </h2>
+                                    <span class="subtitle is-6">
+                                       Empty tool, add algorithm to start.
+                                    </span>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column" style="height: 100vh; overflow-y: auto; scrollbar-width: none;">
+            <nav class="panel">
+                <div class="panel-heading">
+                    <nav class="media">
+                        <div class="media-left">Toolkits</div>
+                        <div class="media-content"></div>
+                        <div class="media-right"></div>
+                    </nav>
+                </div>
+                <span id="tools-list">
+                    
+                </span>
+                <div class="panel-block">
+                    <div class="container m-0 p-0">
+                        <nav class="pagination is-centered is-small" role="navigation">
+                            <a class="pagination-previous" onclick="next_toolkits_page(false);"><i class="fa-solid fa-arrow-left"></i></a>
+                            <a class="pagination-next" onclick="next_toolkits_page(true);"><i class="fa-solid fa-arrow-right"></i></a>
+                            <ul class="pagination-list">
+                            <li><a class="pagination-link" id="toolkits-current-page">1/1</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </nav>
+
+            <nav class="panel" id="tool-details" style="display: none;">
+                <div class="panel-heading">
+                    <nav class="media">
+                        <div class="media-left" id="tool-details-id"></div>
+                        <div class="media-content"></div>
+                        <div class="media-right">
+                            <button class="button is-success is-small has-text-primary-dark" id="tool-details-run" onclick="add_block();">
+                                <i class="fa-solid fa-plus"></i>
+                            </button> 
+                        </div>
+                    </nav>
+                </div>
+                <span id="tool-details-main">
+                    <p class="panel-tabs">
+                        <a class="is-active" id="tab-tool-details-intro">Info</a>
+                        <a id="tab-tool-details-inputs">Inputs</a>
+                        <a id="tab-tool-details-outputs">Outputs</a>
+                    </p>
+                    <span id="tool-details-intro">
+                        <a class="panel-block">
+                            <div class="content">
+                                <p class="title is-6" id="tool-details-name"></p>
+                                <p id="tool-details-desc"></p>
+                            </div>
+                        </a>
+                    </span>
+                    <span id="tool-details-inputs" style="display: none;">
+                    </span>
+                    <span id="tool-details-outputs" style="display: none;">
+                    </span>
+                    
+                </span>
+            </nav>
+
+            <nav class="panel" id="tool-setting">
+                <div class="panel-heading">
+                    <nav class="media">
+                        <div class="media-left" id="tool-details-name">Settings</div>
+                        <div class="media-content"></div>
+                        <div class="media-right">
+                            {% comment %} <button class="button is-link is-small has-text-white" onclick="share_workflow();" id="share-button">
+                                <i class="fa-solid fa-share-from-square"></i>
+                            </button>  {% endcomment %}
+                        </div>
+                    </nav>
+                </div>
+                <div class="panel-block">
+                    <div class="container">
+                        <div class="field">
+                            <label class="label">Tool Name</label>
+                            <div class="control">
+                              <input class="input" type="text" value="Tool" placeholder="name" id="workflow-settings-name">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Tool Description</label>
+                            <div class="control">
+                                <textarea class="textarea" placeholder="description" id="workflow-settings-desc">Tool description (example).</textarea>
+                            </div>
+                        </div>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-success" onclick="update_workflow_info();">Update</button>
+                            </div>
+                            <div class="control">
+                                <button class="button is-danger" onclick="start_del_workflow();">Delete</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    
+</section>
+
+<div class="modal" id="edit-block">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title" id="edit-block-name">N/A</p>
+        <button class="delete" aria-label="close" onclick="block_operation_end();"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="table-container">
+            <table class="table is-hoverable is-fullwidth is-striped" id="edit-block-table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Parameter</th>
+                        <th>Rename</th>
+                    </tr>
+                </thead>
+                <tbody id="edit-block-table-body">
+                </tbody>
+            </table>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+
+        <div class="buttons">
+          <button class="button is-success" id="edit-block-next">add</button>
+        </div>
+      </footer>
+    </div>
+</div>
+
+
+<!-- Drop Workflow -->
+<div class="modal" id="del-workflow">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Delete Workflow</p>
+        <button class="delete" aria-label="close" onclick="ends_del_workflow();"></button>
+      </header>
+      <section class="modal-card-body">
+        <span class="tag is-danger">Warning</span>
+        <br>
+        <p class="title is-4">Do you confirm to delete this workflow?</p>
+        <p class="subtitle is-6">This operation is not reversable!</p>
+        
+      </section>
+      <footer class="modal-card-foot">
+        <form action="del/" method="post" id="del-workflow-submit">
+            {% csrf_token %}
+            <div class="field is-grouped">
+                <p class="control">
+                    <button class="button is-danger" onclick="$('del-workflow-submit').submit();">Delete!</button>
+                </p>
+                <p class="control">
+                    <button class="button" onclick="ends_del_workflow();">Cancel</button>
+                </p>
+            </div>
+        </form>
+      </footer>
+    </div>
+</div>
+
+<!-- Page Loading -->
+<div class="modal is-active" id="load-project">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <p class="title has-text-white">Workflow Loading...</p>
+        <progress class="progress is-large is-success" max="100"></progress>
+    </div>
+</div>
+
+<!-- Page Unavaliable -->
+<div class="modal" id="workflow-unavailable">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <p class='m-0 mb-2'>
+            <a href="{% url 'workflows' %}">
+                <button class="button is-ghost p-0 m-0">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>&nbsp;Dashboard
+                </button>
+            </a>
+        </p>
+        <p class="title has-text-danger"><i class="fa-solid fa-circle-exclamation"></i>&nbsp; Tool Unavaliable!</p>
+        <p class="subtitle has-text-white" id="workflow-unavailable-info"></p>
+    </div>
+</div>
+
+<script>
+var CSRF_TOKEN = "{{ csrf_token }}";
+var WORKFLOW_ID = "{{ workflow_id }}";
+var REQUEST_HOST = '{{ host }}'
+</script>
+<script src="{% static 'javascripts/request.js' %}"></script>
+<script src="{% static 'javascripts/workflow.js' %}"></script>
+{% endblock %}

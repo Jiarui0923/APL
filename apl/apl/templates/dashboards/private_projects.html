@@ -1,0 +1,95 @@
+{% extends "dashboard.html" %}
+{% load static %}
+
+{% block dashboard_content %}
+<div class="container">
+  <a href="{% url 'create-projects' %}">
+    <button class="button"><i class="fa-solid fa-square-plus"></i>&nbsp;New Project</button>
+  </a>
+<div>
+<br>
+<div class="fixed-grid has-3-cols has-1-cols-mobile">
+    <div class="grid">
+        {% if projects %}
+        {% for project in projects %}
+        <div class="cell">
+          <div class="card">
+              <div class="card-content">
+                  <div class="content">
+                    <h2 class="subtitle is-4">
+                      <span class="has-text-link"><i class="fa-solid fa-flask"></i></span>
+                      {{ project.name }}
+                    </h2>
+                    <time class="has-text-grey">{{ project.create }}</time>
+                    <div style="overflow-y: auto; height: 4em; scrollbar-width: none;">{{ project.desc }}</div>
+                  </div>
+              </div>
+              <footer class="card-footer">
+                <a href="{{ project.id }}" class="card-footer-item"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="{{ project.id }}/copy" class="card-footer-item has-text-warning"><i class="fa-solid fa-copy"></i></a>
+              </footer>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="cell">
+          <a href="{% url 'create-projects' %}">
+            <div class="card has-background-grey-lighter is-shadowless">
+            <div class="card-content">
+                  <div class="content has-text-centered m-6">
+                    <h2 class="title is-2">
+                      <span class="icon is-large">
+                        <i class="fa-solid fa-plus "></i>
+                      </span> 
+                    </h2>
+                    <span class="subtitle is-6">
+                      New Blank Project 
+                    </span>
+                  </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if add_project %}
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+      <header class="modal-card-head">
+          <p class="modal-card-title">New Blank Project</p>
+          <a href="{% url 'projects' %}"><button class="delete" aria-label="close"></button></a>
+      </header>
+      <form action="#" method="post" id="new-blank-project">
+        {% csrf_token %}
+        <section class="modal-card-body">
+              <div class="field">
+                <label class="label">Project Name</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Untitled Project" name="name">
+                </div>
+              </div>
+              
+              <div class="field">
+                <label class="label">Description</label>
+                <div class="control">
+                  <textarea class="textarea" placeholder="Project Description" name="desc" form="new-blank-project"></textarea>
+                </div>
+              </div>
+
+              
+        </section>
+        <footer class="modal-card-foot">
+          <div class="field">
+            <div class="control">
+              <input type="submit" class="button is-success is-outlined is-fullwidth" value="Create"></input>
+            </div>
+          </div>
+        </footer>
+      </form>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

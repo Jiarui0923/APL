@@ -1,0 +1,102 @@
+{% extends "dashboard.html" %}
+{% load static %}
+
+{% block dashboard_content %}
+<div class="container">
+  <a href="{% url 'create-resources' %}">
+    <button class="button"><i class="fa-solid fa-square-plus"></i>&nbsp;Add Resource</button>
+  </a>
+<div>
+<br>
+<div class="fixed-grid has-3-cols has-1-cols-mobile">
+    <div class="grid">
+        {% if resources %}
+        {% for resource in resources %}
+        <div class="cell">
+          <div class="card">
+              <div class="card-content">
+                  <div class="content">
+                    <h2 class="subtitle is-4">
+                      <span class="has-text-link"><i class="fa-solid fa-server"></i></span>
+                      {{ resource.name }}
+                    </h2>
+                    <p class="has-text-grey">{{ resource.host }}</p>
+                    Auth ID: <span class="tag">{{ resource.api_id }}</span>
+                  </div>
+              </div>
+              <footer class="card-footer">
+                {% if resource.status %}
+                <a class="card-footer-item has-text-success"><i class="fa-solid fa-link"></i></a>
+                {% else %}
+                <a class="card-footer-item has-text-danger"><i class="fa-solid fa-link-slash"></i></a>
+                {% endif %}
+                <a href="{{ resource.id }}/del/" class="card-footer-item has-text-danger"><i class="fa-solid fa-trash"></i></a>
+              </footer>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="cell">
+          <a href="{% url 'create-resources' %}">
+            <div class="card has-background-grey-lighter is-shadowless">
+            <div class="card-content">
+                  <div class="content has-text-centered m-6">
+                    <h2 class="title is-2">
+                      <span class="icon is-large">
+                        <i class="fa-solid fa-plus "></i>
+                      </span> 
+                    </h2>
+                    <span class="subtitle is-6">
+                      Add Resource
+                    </span>
+                  </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if add_resource %}
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+      <header class="modal-card-head">
+          <p class="modal-card-title">Add Source</p>
+          <a href="{% url 'resources' %}"><button class="delete" aria-label="close"></button></a>
+      </header>
+      <form action="#" method="post">
+        {% csrf_token %}
+        <section class="modal-card-body">
+              <div class="field">
+                <label class="label">Host</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="API Host (URL)" name="host">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">API ID</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="API ID" name="api_id">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">API Key</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="API Key" name="api_key">
+                </div>
+              </div>
+        </section>
+        <footer class="modal-card-foot">
+          <div class="field">
+            <div class="control">
+              <input type="submit" class="button is-success is-outlined is-fullwidth" value="Create"></input>
+            </div>
+          </div>
+        </footer>
+      </form>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

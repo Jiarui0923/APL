@@ -1,0 +1,732 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block header_ext %}
+<link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js" integrity="sha512-8RnEqURPUc5aqFEN04aQEiPlSAdE0jlFS/9iGgUyNtwFnSKCXhmB6ZTNl7LnDtDWKabJIASzXrzD0K+LYexU9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" integrity="sha512-uf06llspW44/LZpHzHT6qBOIVODjWtv4MxCricRxkzvopAlSWnTf6hpZTFxuuZcuNE9CBQhqE0Seu1CoRk84nQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/idea.min.css" integrity="sha512-N+NJU9LvDmlEQyb3xDkcXPOR8SDXQGx4kRs9wCi/U6GPfN/FSsfjIzY61Svd8eg4Y1VcbBL1XhuC3VzzQYmcJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="columns">
+        <div class="column is-three-quarters">
+            <p class='m-0 mb-2'>
+                <a href="{% url 'projects' %}">
+                    <button class="button is-ghost p-0 m-0">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>&nbsp;Dashboard
+                    </button>
+                </a>
+            </p>
+            <p class="title is-3">
+                <i class="fa-solid fa-flask"></i> <span id="project-title">Project</span>
+            </p>
+            <p class="subtitle is-6 has-text-grey"><time id="project-create">TIME</span></time>
+            
+            <div class="tabs">
+                <ul>
+                    <li class="is-active" id="tab-main-table">
+                    <a>
+                        <span class="icon is-small">
+                        <i class="fa-solid fa-table"></i>
+                        </span>
+                        <span>Table</span>
+                    </a>
+                    </li>
+                    <li id="tab-main-settings">
+                    <a>
+                        <span class="icon is-small">
+                        <i class="fas fa-wrench" aria-hidden="true"></i>
+                        </span>
+                        <span>Settings</span>
+                    </a>
+                    </li>
+                </ul>
+            </div>
+            <nav class="panel" id="main-table">
+                <p class="panel-heading has-background-primary-dark">Data Table</p>
+                <div class="panel-block">
+                    <div class="container p-0 m-0">
+                        <div class="media mb-0">
+                            <div class="media-left tabs is-toggle mb-1 is-small is-size-5-mobile">
+                                <ul>
+                                    <li>
+                                    <a onclick="start_files_uploads();" id="upload-files-button" class="is-small">
+                                        <span class="icon is-small"
+                                        ><i class="fa-solid fa-upload"></i
+                                        ></span>
+                                        <span class="is-hidden-mobile is-size-5-mobile">Upload</span>
+                                    </a>
+                                    </li>
+                                    <li onclick="start_download();">
+                                    <a id="download-button" class="is-small">
+                                        <span class="icon is-small"
+                                        ><i class="fa-solid fa-download"></i
+                                        ></span>
+                                        <span class="is-hidden-mobile is-size-5-mobile">Download</span>
+                                    </a>
+                                    </li>
+                                    <li onclick="add_row();">
+                                    <a id="add-row-button" class="is-small">
+                                        <span class="icon is-small"
+                                        ><i class="fa-solid fa-diagram-next"></i></span>
+                                        <span class="is-hidden-mobile is-size-5-mobile">Add Row</span>
+                                    </a>
+                                    </li>
+                                    <li onclick="del_row();">
+                                        <a class="has-text-danger" id="del-row-button" class="is-small">
+                                            <span class="icon is-small"
+                                            ><i class="fa-solid fa-square-minus"></i></span>
+                                            <span class="is-hidden-mobile is-size-5-mobile">Drop Row</span>
+                                        </a>
+                                    </li>
+                                    <li onclick="dup_row();">
+                                        <a class="has-text-warning" id="dup-row-button" class="is-small">
+                                            <span class="icon is-small"
+                                            ><i class="fa-solid fa-copy"></i></span>
+                                            <span class="is-hidden-mobile is-size-5-mobile">Copy Row</span>
+                                        </a>
+                                    </li>
+                                    <li onclick="refresh_table();">
+                                        <a id="refresh-table-button" class="is-small">
+                                            <span class="icon is-small"
+                                            ><i class="fa-solid fa-repeat"></i></span>
+                                            <span class="is-hidden-mobile is-size-5-mobile">Refresh</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="media-content"></div>
+                            <div class="media-right">
+                                <div class="is-size-5-mobile">
+                                    <span class="is-hidden-mobile tag"><span id="table-status-text">working</span></span>
+                                    <span class="icon has-text-link" id="table-status-icon">
+                                        <i class="fa-solid fa-sync fa-spin"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="data-table"></div>
+                    </div>
+                    
+                </div>
+                <div class="panel-block" id="unit-data-indexer">
+                    <div class="container media p-0 m-0">
+                        <div class="media-left">
+                            <div class="container">
+                                <div class="field is-grouped">
+                                    <div class="control">
+                                        <button class="button is-small is-size-6-mobile" onclick="edit_table_data();" id="data-unit-update-button" disable>
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <span class="is-hidden-mobile">&nbsp;Update</span>
+                                        </button>
+                                    </div>
+                                    <div class="control">
+                                        <div class="file is-small is-size-6-mobile">
+                                            <label class="file-label">
+                                                <input class="file-input" type="file" id="data-unit-uploader" disable/>
+                                                <span class="file-cta">
+                                                    <span class="file-icon">
+                                                    <i class="fas fa-upload"></i>
+                                                    </span>
+                                                    <span class="file-label is-hidden-mobile">Upload</span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media-content">
+                            <div class="tabs is-small is-toggle is-centered is-toggle-rounded is-size-6-mobile">
+                                <ul>
+                                  <li class="is-active" id="tab-unit-data-editor"><a><i class="fa-solid fa-pen-to-square"></i></a></li>
+                                  <li id="tab-unit-data-visual"><a><i class="fa-solid fa-compass-drafting"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="media-right">
+                            <div class="container">
+                                <span class="tag is-size-6-mobile"><span class="is-hidden-mobile">row:&nbsp;</span><span id="table-row">N/A</span></span>&nbsp;
+                                <span class="tag is-size-6-mobile"><span class="is-hidden-mobile">column:&nbsp;</span><span id="table-col">N/A</span></span>&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-block" id="unit-data-editor">
+                    <div class="container p-0 m-0">
+                        <div id="editor">
+
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="panel-block" id="unit-data-visual" style="display:none;">
+                    <div class="container p-0 m-0">
+                        <div class="columns">
+                            <div class="column is-two-thirds" id="unit-view">
+                                
+                            </div>
+                            <div class="column">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </nav>
+            <nav class="panel" id="main-settings" style="height: 100vh; overflow-y: auto; scrollbar-width: none; display: none;">
+                <p class="panel-heading has-background-primary-dark">Setting</p>
+                <div class="panel-block">
+                    <div class="container p-0 m-2">
+                        <div class="content">
+                            <p class="title is-4">General</p>
+                            <p class="subtitle is-6">Update project information.</p>
+                        </div>
+                        <div class="field">
+                            <label class="label">Project Name</label>
+                            <div class="control">
+                                <input class="input" type="text" value="Project Name" name="name" id="settings-project-name">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Project Description</label>
+                            <div class="control">
+                                <textarea class="textarea" placeholder="description" id="settings-project-description">Project Description</textarea>
+                            </div>
+                        </div>
+                        <button class="button" onclick="update_project_info();"><i class="fa-solid fa-pen"></i>&nbsp;update</button>
+                    </div>
+                </div>
+                <div class="panel-block">
+                    <div class="container p-0 m-2">
+                        <div class="content">
+                            <p class="title is-4">Resources</p>
+                            <p class="subtitle is-6">Manage resources attached to this project.</p>
+                        </div>
+                        <button class="button" onclick="start_manage_resource();"><i class="fa-solid fa-plus"></i>&nbsp;add</button>
+                        <div class="table-container">
+                            <table class="table is-fullwidth is-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Host</th>
+                                        <th>Authority</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="resource-list">
+    
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="panel-block">
+                    <div class="content m-2">
+                        <p class="title is-4">Drop Project</p>
+                        <p class="subtitle is-6">Please be careful! This operation cannot be reversed!</p>
+                        <button class="button is-danger is-outlined" onclick="start_del_project();">Drop This Project</button>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+        <div class="column" style="height: 100vh; overflow-y: auto; scrollbar-width: none;">
+            <nav class="panel">
+                <div class="panel-heading">
+                    <nav class="media">
+                        <div class="media-left">Toolbox</div>
+                        <div class="media-content"></div>
+                        <div class="media-right">
+                            <button class="button is-success is-small has-text-primary-dark" onclick="start_add_all_tools();">
+                                <i class="fa-solid fa-plus"></i>
+                            </button> 
+                        </div>
+                    </nav>
+                </div>
+                <span id="workflow-list">
+                </span>
+            </nav>
+            <nav class="panel" id="workflow-details"  style="display: none;">
+                <div class="panel-heading">
+                    <nav class="media">
+                        <div class="media-left" id="workflow-details-name">N/A</div>
+                        <div class="media-content"></div>
+                        <div class="media-right">
+                            <button class="button is-success is-small has-text-primary-dark" id="workflow-details-run" onclick="run_workflow();">
+                                <i class="fa-solid fa-play"></i>
+                            </button> 
+                        </div>
+                    </nav>
+                </div>
+                <span id="workflow-details-main">
+                    <p class="panel-tabs">
+                        <a class="is-active" id="tab-workflow-details-intro">Steps</a>
+                        <a id="tab-workflow-details-inputs">Inputs</a>
+                        <a id="tab-workflow-details-outputs">Outputs</a>
+                    </p>
+                    <span id="workflow-details-intro">
+                        <a class="panel-block">
+                            <div class="content">
+                                <p id="workflow-details-desc">
+                                </p>
+                            </div>
+                        </a>
+                        <span id="workflow-details-steps">
+
+                        </span>
+                    </span>
+                    <span id="workflow-details-inputs" style="display: none;">
+                    </span>
+                    <span id="workflow-details-outputs" style="display: none;">
+                    </span>
+                </span>
+            </nav>
+            <nav class="panel" id="history-details">
+                <div class="panel-heading">
+                    <nav class="media">
+                        <div class="media-left" id="history-details-name">Jobs</div>
+                        <div class="media-content"></div>
+                        <div class="media-right">
+                            <button class="button is-success is-small has-text-primary-dark" id="history-details-run">
+                                <i class="fa-solid fa-check"></i>
+                            </button> 
+                        </div>
+                    </nav>
+                </div>
+                <span id="history-details-main">
+                </span>
+                <div class="panel-block has-text-centered">
+                    <div class="container m-0 p-0">
+                        <nav class="pagination is-centered is-small" role="navigation" aria-label="pagination">
+                            <a class="pagination-previous" onclick="update_history_page(false);"><i class="fa-solid fa-arrow-left"></i></a>
+                            <a class="pagination-next" onclick="update_history_page(true);"><i class="fa-solid fa-arrow-right"></i></a>
+                            <ul class="pagination-list">
+                            <li><a class="pagination-link" id="history-current-page">1</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    
+</section>
+
+<!-- Read Batch Files -->
+<div class="modal is-family-primary" id="upload-mutiple-files-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card" style="display: none;" id="upload-mutiple-files-modal-upload">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Upload Files</p>
+        <button class="delete" aria-label="close" onclick="end_files_uploads();"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="columns">
+            <div class="column">
+                <p>
+                    Choose all files you would like to upload here.
+                </p>
+                <p>
+                    <div class="file is-boxed">
+                        <label class="file-label">
+                        <input class="file-input" type="file" multiple id="batch-file-uploader" />
+                        <span class="file-cta">
+                            <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                            </span>
+                            <span class="file-label"> Upload </span>
+                        </span>
+                        </label>
+                    </div>
+                </p>
+            </div>
+            <div class="column">
+                <p class="subtitle is-6">Uploaded Files</p>
+                <nav class="panel">
+                    <span id="uploaded-files-list">
+                    </span>
+                    <div class="panel-block">
+                        <div class="container m-0 p-0">
+                            <nav class="pagination is-centered is-small" role="navigation" aria-label="pagination">
+                                <a class="pagination-previous" onclick="update_files_page(false);"><i class="fa-solid fa-arrow-left"></i></a>
+                                <a class="pagination-next" onclick="update_files_page(true);"><i class="fa-solid fa-arrow-right"></i></a>
+                                <ul class="pagination-list">
+                                  <li><a class="pagination-link" id="uploaded-files-page">0/0</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        
+      </section>
+      <footer class="modal-card-foot">
+        <div class="buttons">
+          <button class="button is-success" id="upload-mutiple-files-modal-upload-next" onclick="check_files_types();" disabled>Upload File to Continue</button>
+        </div>
+      </footer>
+    </div>
+    <div class="modal-card" style="display: none;" id="upload-mutiple-files-modal-files">
+        <header class="modal-card-head">
+          <p class="modal-card-title">File Alignment</p>
+          <button class="delete" aria-label="close" onclick="end_files_uploads();"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="columns">
+                <div class="column">
+                    <label class="label">Index column in table (file name)</label>
+                    <div class="field has-addons">
+                        <div class="control" style="display:none;" id="file-uploads-index-column-select-control">
+                            <div class="select is-fullwidth">
+                                <select id="file-uploads-index-column-select">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control" id="file-uploads-index-column-new-control">
+                            <input class="input" type="text" placeholder="new column" value="pdb_id" id="file-uploads-index-column-new"/>
+                        </div>
+                        <div class="control">
+                            <button class="button" onclick="switch_file_index();">
+                                <span class="icon is-small">
+                                    <i class="fa-solid fa-repeat"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <label class="label">Output column in table (file data)</label>
+                    <div class="field has-addons">
+                        <div class="control" id="file-uploads-output-column-select-control">
+                            <div class="select is-fullwidth">
+                                <select id="file-uploads-output-column-select">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control" style="display:none;" id="file-uploads-output-column-new-control">
+                            <input class="input" type="text" placeholder="new column"  id="file-uploads-output-column-new"/>
+                        </div>
+                        <div class="control">
+                            <button class="button" onclick="switch_file_output();">
+                                <span class="icon is-small">
+                                    <i class="fa-solid fa-repeat"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="column">
+                    <p class="subtitle is-6">Uploaded Files</p>
+                    <nav class="panel">
+                        <span id="uploaded-files-list">
+                        </span>
+                        <div class="panel-block">
+                            <div class="container m-0 p-0">
+                                <nav class="pagination is-centered is-small" role="navigation" aria-label="pagination">
+                                    <a class="pagination-previous" onclick="update_files_page(false);"><i class="fa-solid fa-arrow-left"></i></a>
+                                    <a class="pagination-next" onclick="update_files_page(true);"><i class="fa-solid fa-arrow-right"></i></a>
+                                    <ul class="pagination-list">
+                                      <li><a class="pagination-link" id="uploaded-files-page">0/0</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+          
+        </section>
+        <footer class="modal-card-foot">
+          <div class="buttons">
+            <button class="button is-success" onclick="submit_mutiple_files();">Continue</button>
+          </div>
+        </footer>
+    </div>
+    <div class="modal-card" style="display: none;" id="upload-mutiple-files-modal-tables">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Table Alignment</p>
+          <button class="delete" aria-label="close" onclick="end_files_uploads();"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="columns">
+                <div class="column">
+                    <label class="label">Index column in table</label>
+                    <div class="field has-addons">
+                        <div class="control" id="table-uploads-index-column-select-control">
+                            <div class="select is-fullwidth">
+                                <select id="table-uploads-index-column-select">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control" style="display:none;" id="table-uploads-index-column-new-control">
+                            <input class="input" type="text" placeholder="new column"  id="table-uploads-index-column-new"/>
+                        </div>
+                        <div class="control">
+                            <button class="button" onclick="switch_table_index();">
+                                <span class="icon is-small">
+                                    <i class="fa-solid fa-repeat"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <p>Click `insert` to attach this table to the table.</p>
+                </div>
+                <div class="column">
+                    <p class="subtitle is-6">Uploaded Files</p>
+                    <nav class="panel">
+                        <span id="uploaded-files-list">
+                        </span>
+                        <div class="panel-block">
+                            <div class="container m-0 p-0">
+                                <nav class="pagination is-centered is-small" role="navigation" aria-label="pagination">
+                                    <a class="pagination-previous" onclick="update_files_page(false);"><i class="fa-solid fa-arrow-left"></i></a>
+                                    <a class="pagination-next" onclick="update_files_page(true);"><i class="fa-solid fa-arrow-right"></i></a>
+                                    <ul class="pagination-list">
+                                      <li><a class="pagination-link" id="uploaded-files-page">0/0</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+          
+        </section>
+        <footer class="modal-card-foot">
+          <div class="buttons">
+            <button class="button is-success" onclick="read_submit_table();">Insert</button>
+          </div>
+        </footer>
+    </div>
+    <div class="modal-card" style="display: none;" id="upload-mutiple-files-modal-select">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Processing Method Selection</p>
+          <button class="delete" aria-label="close" onclick="end_files_uploads();"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="columns">
+                <div class="column">
+                    <p>There are several table files uploaded. Please choose the way you would like to process them.</p>
+                    <br>
+                    <p class="buttons">
+                        <button class="button is-success is-outlined" onclick="from_select_to_stack_tables();">
+                            <span class="icon">
+                                <i class="fa-solid fa-table"></i>
+                            </span><br>
+                            <span>Table File</span>
+                        </button>
+                    </p>
+                    <p class="buttons">
+                        <button class="button is-info is-outlined" onclick="from_select_to_mutiple_files();">
+                            <span class="icon">
+                                <i class="fa-regular fa-copy"></i>
+                            </span><br>
+                            <span>Mutiple Simple Files</span>
+                        </button>
+                    </p>
+                </div>
+                <div class="column">
+                    <p class="subtitle is-6">Uploaded Files</p>
+                    <nav class="panel">
+                        <span id="uploaded-files-list">
+                        </span>
+                        <div class="panel-block">
+                            <div class="container m-0 p-0">
+                                <nav class="pagination is-centered is-small" role="navigation" aria-label="pagination">
+                                    <a class="pagination-previous" onclick="update_files_page(false);"><i class="fa-solid fa-arrow-left"></i></a>
+                                    <a class="pagination-next" onclick="update_files_page(true);"><i class="fa-solid fa-arrow-right"></i></a>
+                                    <ul class="pagination-list">
+                                      <li><a class="pagination-link" id="uploaded-files-page">0/0</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+          
+        </section>
+        <footer class="modal-card-foot">
+        </footer>
+    </div>
+    <div class="modal-card" style="display: none;" id="upload-mutiple-files-modal-uploadprogress">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Uploading...</p>
+        </header>
+        <section class="modal-card-body">
+            <p class="subtitle is-4">Please wait for a moment.</p>
+            <p>Uploading <span id="upload-mutiple-files-modal-uploadprogress-file"></span></p>
+            <progress class="progress is-success" value="0" max="100" id="upload-mutiple-files-modal-uploadprogress-progress"></progress>
+        </section>
+        <footer class="modal-card-foot">
+        </footer>
+    </div>
+</div>
+
+<!-- Add Toolkits -->
+<div class="modal" id="add-tool">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Toolbox</p>
+        <button class="delete" aria-label="close" onclick="end_add_all_tools();"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="fixed-grid has-2-cols">
+            <div class="grid" id="add-tool-list">
+                
+            </div>
+        </div>
+        
+      </section>
+      <footer class="modal-card-foot">
+        <div class="container">
+            <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                <a class="pagination-previous" onclick="update_all_tools_page(false);"><i class="fa-solid fa-arrow-left"></i></a>
+                <a class="pagination-next" onclick="update_all_tools_page(true);"><i class="fa-solid fa-arrow-right"></i></a>
+                <ul class="pagination-list">
+                <li><a class="pagination-link" id="all-tools-current-page">1/1</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+      </footer>
+    </div>
+</div>
+
+<!-- Add Resources -->
+<div class="modal" id="add-resource">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Resources</p>
+        <button class="delete" aria-label="close" onclick="end_manage_resource();"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="fixed-grid has-2-cols">
+            <div class="grid" id="add-resource-list">
+                
+            </div>
+        </div>
+        
+      </section>
+      <footer class="modal-card-foot">
+        <div class="container">
+            <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                <a class="pagination-previous" onclick="switch_resource_page(false);"><i class="fa-solid fa-arrow-left"></i></a>
+                <a class="pagination-next" onclick="switch_resource_page(true);"><i class="fa-solid fa-arrow-right"></i></a>
+                <ul class="pagination-list">
+                <li><a class="pagination-link" id="all-resource-page">1/1</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+      </footer>
+    </div>
+</div>
+
+<!-- Drop Project -->
+<div class="modal" id="del-project">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Delete Project</p>
+        <button class="delete" aria-label="close" onclick="ends_del_project();"></button>
+      </header>
+      <section class="modal-card-body">
+        <span class="tag is-danger">Warning</span>
+
+        <p class="title is-4">Do you confirm to delete this project?</p>
+        <p class="subtitle is-6">This operation is not reversable!</p>
+        
+      </section>
+      <footer class="modal-card-foot">
+        <form action="del/" method="post" id="del-project-submit">
+            {% csrf_token %}
+            <div class="field is-grouped">
+                <p class="control">
+                    <button class="button is-danger" onclick="$('del-project-submit').submit();">Delete!</button>
+                </p>
+                <p class="control">
+                    <button class="button" onclick="ends_del_project();">Cancel</button>
+                </p>
+            </div>
+        </form>
+      </footer>
+    </div>
+</div>
+
+<!-- Download -->
+<div class="modal" id="download-project">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Download</p>
+        <button class="delete" aria-label="close" onclick="end_download();"></button>
+      </header>
+      <form method="get" action="report" target="_blank">
+      <section class="modal-card-body">
+        <div class="field">
+            <label class="label">Index Column</label>
+            <div class="control">
+                <div class="select">
+                    <select name="index" id="download-col-index"></select>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Report Title / File Name</label>
+            <div class="control">
+                <input class="input" type="text" placeholder="name or title" name="name" id="download-name"/>
+            </div>
+        </div>
+        
+      </section>
+      <footer class="modal-card-foot">
+        <div class="container">
+            <div class="buttons">
+                <button class="button" type="submit" formaction="download/report" formtarget="_blank" onclick="end_download();">
+                    <span class="icon">
+                        <i class="fa-solid fa-book"></i>
+                    </span>
+                    <span>Report</span>
+                </button>
+                <button class="button" type="submit" formaction="download/data" formtarget="_blank" onclick="end_download();">
+                    <span class="icon">
+                        <i class="fa-solid fa-download"></i>
+                    </span>
+                    <span>Data</span>
+                </button>
+            </div>
+        </div>
+      </footer>
+      </form>
+    </div>
+</div>
+
+<!-- Page Loading -->
+<div class="modal is-active" id="load-project">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <p class="title has-text-white">Project Loading...</p>
+        <progress class="progress is-large is-success" max="100"></progress>
+        <div class="tags are-medium">
+            <span class="tag" id="load-table-data">Table Data</span>
+            <span class="tag" id="load-proj-info">Project Information</span>
+            <span class="tag" id="load-jobs-history">Job List</span>
+        </div>
+    </div>
+</div>
+
+<script>
+var CSRF_TOKEN = "{{ csrf_token }}";
+var PROJECT_ID = "{{ project_id }}";
+var REQUEST_HOST = '{{ host }}'
+</script>
+<script src="{% static 'javascripts/request.js' %}"></script>
+<script src="{% static 'javascripts/project.js' %}"></script>
+{% endblock %}

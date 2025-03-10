@@ -1,0 +1,98 @@
+{% extends "dashboard.html" %}
+{% load static %}
+
+{% block dashboard_content %}
+
+<div class="container">
+  <a href="{% url 'create-workflows' %}">
+    <button class="button"><i class="fa-solid fa-square-plus"></i>&nbsp;New Tool</button>
+  </a>
+<div>
+<br>
+<div class="fixed-grid has-3-cols has-1-cols-mobile">
+    <div class="grid">
+        {% if workflows %}
+        {% for workflow in workflows %}
+        <div class="cell">
+          <div class="card">
+              <div class="card-content">
+                  <div class="content">
+                    <h2 class="subtitle is-4">
+                      <span class="has-text-link"><i class="fas fa-code-branch"></i></span>
+                      {{ workflow.name }}
+                    </h2>
+                    <span class="has-text-grey">{{ workflow.numblock }} blocks</span>
+                    <div style="overflow-y: auto; height: 4em; scrollbar-width: none;">{{ workflow.desc }}</div>
+                  </div>
+              </div>
+              <footer class="card-footer">
+                <a href="{{ workflow.id }}" class="card-footer-item"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="{{ workflow.id }}/start/" class="card-footer-item has-text-success">
+                  <i class="fa-solid fa-play"></i>
+                </a>
+              </footer>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="cell">
+          <a href="{% url 'create-workflows' %}">
+            <div class="card has-background-grey-lighter is-shadowless">
+            <div class="card-content">
+                  <div class="content has-text-centered m-6">
+                    <h2 class="title is-2">
+                      <span class="icon is-large">
+                        <i class="fa-solid fa-plus "></i>
+                      </span> 
+                    </h2>
+                    <span class="subtitle is-6">
+                      New Tool
+                    </span>
+                  </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if add_workflow %}
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+      <header class="modal-card-head">
+          <p class="modal-card-title">New Blank Tool</p>
+          <a href="{% url 'workflows' %}"><button class="delete" aria-label="close"></button></a>
+      </header>
+      <form action="#" method="post" id="new-blank-workflow">
+        {% csrf_token %}
+        <section class="modal-card-body">
+              <div class="field">
+                <label class="label">Tool Name</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Untitled Tool" name="name">
+                </div>
+              </div>
+              
+              <div class="field">
+                <label class="label">Description</label>
+                <div class="control">
+                  <textarea class="textarea" placeholder="Project Description" name="desc" form="new-blank-workflow"></textarea>
+                </div>
+              </div>
+
+              
+        </section>
+        <footer class="modal-card-foot">
+          <div class="field">
+            <div class="control">
+              <input type="submit" class="button is-success is-outlined is-fullwidth" value="Create"></input>
+            </div>
+          </div>
+        </footer>
+      </form>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-6 pt-6" style="min-height: 100vh;" >
+    <div class="container p-6 has-text-centered">
+        <div class="has-text-centered">
+            <img width="128" src="{% static 'images/apl.png' %}" />
+            <h1 class="title is-1">APLSuite</h1>
+            <h2 class="subtitle is-4">Made Antigen Processing Likelihood Calculation Simple</h2>
+        </div>
+        <div class="mt-6">
+            <a href="{% url 'login' %}">
+                <button class="button has-background-primary-dark has-text-white">Start</button>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
