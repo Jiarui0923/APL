@@ -1,5 +1,4 @@
-<img src="/images/tulane_long.png" width="128px">
-<img src="/images/icon_long.png" width="128px"> 
+<img src="/images/tulane_long.png" width="128px"><img src="/images/icon_long.png" width="256px"> 
 
 # <img src="images/icon.png" width="64px">  Antigen Processing Likelihood Server
 

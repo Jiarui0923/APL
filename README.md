@@ -1,5 +1,4 @@
-<img src="images/tulane_long.png" width="96px">
-<img src="images/icon_long.png" width="220px"> 
+<img src="images/tulane_long.png" width="128px"><img src="images/icon_long.png" width="256px"> 
 
 # (APL) Antigen Processing Likelihood Standalone Application
 `UPDATED: 2025/02/06`
@@ -29,7 +28,7 @@ The APL application is depended on Python 3.12. These are the steps to install i
 2. **Install APL**
    Use following command to install `APL`:
    ```bash
-   pip install https://jellyroll.cs.tulane.edu/pypi/packages/apl-suites-standalone/apl-suites-standalone-0.0.5.zip
+   pip install git+https://github.com/Jiarui0923/APL.git
    ```
    The package will automatically solve and install all dependencies.
    
