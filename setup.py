@@ -22,10 +22,9 @@ NAME = 'APL'
 install_requires = [
     "django",
     "mongita",
-    "docflow",
-    "gpucorex",
-    "easyapi",
-    "caltable",
+    "docflow @ git+https://github.com/Jiarui0923/DocFlow",
+    "easyapi @ git+https://github.com/Jiarui0923/EasyAPI",
+    "caltable @ git+https://github.com/Jiarui0923/CalTable",
     "caltable-bio",
     "easyapi-ncbiblast",
     "easyapi-aplsuite",

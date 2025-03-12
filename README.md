@@ -1,13 +1,30 @@
 <img src="images/tulane_long.png" width="128px"><img src="images/icon_long.png" width="256px"> 
 
-# (APL) Antigen Processing Likelihood Standalone Application
+# (APLSuite) Antigen Processing Likelihood Standalone Application
 `UPDATED: 2025/02/06`
 
-## Introduction
+Computational epitope prediction is a critical tool for exploring and understanding CD4+ T cell-mediated immune responses, a key aspect of adaptive immunity. While existing computational methods primarily focus on supervised learning approaches, they often overlook the essential role of antigen processing in determining binding specificity. To address this limitation, our group developed Antigen Processing Likelihood (APL), an algorithm that integrates crystallographic B-factor, solvent accessible surface area (SASA), hydrogen exchange protection factors (COREX), and sequence entropy. 
 
-To accommodate non-coding users and simplify the utilization of APL computations, we have developed a web application supported by the DRAF and DST frameworks, built on Django. This application incorporates all functionalities of DRAF and DST, offering various operational modes tailored for both novice and experienced users. The web application consists of five primary views: Dashboard View, Project View, Tool View, Quick Start View, and Resource Management View. Each computation algorithm or chained algorithm is represented as a tool, while each computation case is managed as a project. Users can manage tools and projects centrally through the dashboard view.
+<img src="images/WebUI_preview.png">
 
-If there is any issue, please put up with an issue or contact Jiarui Li (jli78@tulane.edu)
+Here, we introduce APLSuite, a comprehensive and lightweight software suite designed to streamline APL-based epitope prediction. APLSuite integrates distributed RESTful API services, a Python client for data aggregation and processing, a data science tool for efficient epitope computation, and a user-friendly graphical user interface for non-coding users. It provides a seamless and efficient pipeline for APL calculation and epitope prediction that can be finished in minutes with GPU-acceleration, which has not been implemented by existed tools. This flexible and extensible software suite is deployable on desktop and cloud environments, offering both guided and customizable workflows to meet diverse research needs in immunology research and immunotherapy development.
+
+**Supporting Components**  
+These links point to supporting components, but there is no need to install them manually. Installing APLSuite will automatically include all required packages.
+1. **EasyAPI**: Transform a wide range of algorithms to a universal RESTful API server.
+   > [https://github.com/Jiarui0923/EasyAPI](https://github.com/Jiarui0923/EasyAPI)
+   - **EasyAPI-APLSuite**: Provides entries for APL components and APL algorithm.
+        > _TBD_
+   - **EasyAPI-NCBIBLAST**: Provides entries for NCBI-API based BLAST service.
+        > _TBD_
+2. **EasyAccess**: Seamlessly connect to and interact with EasyAPI.
+   > [https://github.com/Jiarui0923/EasyAccess](https://github.com/Jiarui0923/EasyAccess)
+3. **CalTable**: A robust computational tool designed for interdisciplinary data processing.
+   > [https://github.com/Jiarui0923/CalTable](https://github.com/Jiarui0923/CalTable)
+   - **CalTable-Bio**: Supports better biological data view and edition for CalTable
+        > _TBD_
+4. **DocFlow**: Supports to create markdown documentation from Python code.
+   > [https://github.com/Jiarui0923/DocFlow](https://github.com/Jiarui0923/DocFlow)
 
 ## Installation
 The APL application is depended on Python 3.12. These are the steps to install it.
@@ -210,3 +227,41 @@ It can be installed following these steps:
     - Click `Add Resource`
     - Host is your server IP address with the port (`http://xxx.xxx.xxx.xxx:8001/`). If your deploy it on the same computer, it should be (`http://localhost:8001/`)
     - API ID and API Key is the customized one you setup in the `config.json`
+  
+## Cite
+**APLSuite (API / WebUI)**:
+1. _UnderReview_
+2. Li, J., Landry, S. J., & Mettu, R. R. (2024, December). GPU Acceleration of Conformational Stability Computation for CD4+ T-cell Epitope Prediction. In 2024 IEEE International Conference on Bioinformatics and Biomedicine (BIBM) (pp. 191-196). IEEE.
+    ```bibtex
+    @inproceedings{li2024gpu,
+    title={GPU Acceleration of Conformational Stability Computation for CD4+ T-cell Epitope Prediction},
+    author={Li, Jiarui and Landry, Samuel J and Mettu, Ramgopal R},
+    booktitle={2024 IEEE International Conference on Bioinformatics and Biomedicine (BIBM)},
+    pages={191--196},
+    year={2024},
+    organization={IEEE}
+    }
+    ```
+**APL Algorithm**:  
+1. Mettu, R. R., Charles, T., & Landry, S. J. (2016). CD4+ T-cell epitope prediction using antigen processing constraints. Journal of immunological methods, 432, 72-81.
+    ```bibtex
+    @article{mettu2016cd4+,
+    title={CD4+ T-cell epitope prediction using antigen processing constraints},
+    author={Mettu, Ramgopal R and Charles, Tysheena and Landry, Samuel J},
+    journal={Journal of immunological methods},
+    volume={432},
+    pages={72--81},
+    year={2016},
+    publisher={Elsevier}
+    }
+    ```
+2. Bhattacharya, A., Lyons, M. C., Landry, S. J., & Mettu, R. R. (2022, August). Incorporating antigen processing into CD4+ T cell epitope prediction with integer linear programming. In Proceedings of the 13th ACM International Conference on Bioinformatics, Computational Biology and Health Informatics (pp. 1-10).
+    ```bibtex
+    @inproceedings{bhattacharya2022incorporating,
+    title={Incorporating antigen processing into CD4+ T cell epitope prediction with integer linear programming},
+    author={Bhattacharya, Avik and Lyons, Molly C and Landry, Samuel J and Mettu, Ramgopal R},
+    booktitle={Proceedings of the 13th ACM International Conference on Bioinformatics, Computational Biology and Health Informatics},
+    pages={1--10},
+    year={2022}
+    }
+    ```
