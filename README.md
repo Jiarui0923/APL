@@ -22,8 +22,10 @@ These links point to supporting components, but there is no need to install them
 3. **CalTable**: A robust computational tool designed for interdisciplinary data processing.
    > [https://github.com/Jiarui0923/CalTable](https://github.com/Jiarui0923/CalTable)
    - **CalTable-Bio**: Supports better biological data view and edition for CalTable
-        > _TBD_
-4. **DocFlow**: Supports to create markdown documentation from Python code.
+        > [https://github.com/Jiarui0923/caltable-bio](https://github.com/Jiarui0923/caltable-bio)
+4. **gpuCOREX**: gpuCOREX (GPU CORrelation with hydrogen EXchange protection factors) is an algorithm designed to compute comformational stability of a protein using GPUs.
+   > [https://github.com/Jiarui0923/gpuCOREX](https://github.com/Jiarui0923/gpuCOREX)
+5. **DocFlow**: Supports to create markdown documentation from Python code.
    > [https://github.com/Jiarui0923/DocFlow](https://github.com/Jiarui0923/DocFlow)
 
 ## Installation

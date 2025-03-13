@@ -25,7 +25,7 @@ install_requires = [
     "docflow @ git+https://github.com/Jiarui0923/DocFlow",
     "easyapi @ git+https://github.com/Jiarui0923/EasyAPI",
     "caltable @ git+https://github.com/Jiarui0923/CalTable",
-    "caltable-bio",
+    "caltable-bio @ git+https://github.com/Jiarui0923/caltable-bio",
     "easyapi-ncbiblast",
     "easyapi-aplsuite",
 ]
