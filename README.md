@@ -14,7 +14,7 @@ These links point to supporting components, but there is no need to install them
 1. **EasyAPI**: Transform a wide range of algorithms to a universal RESTful API server.
    > [https://github.com/Jiarui0923/EasyAPI](https://github.com/Jiarui0923/EasyAPI)
    - **EasyAPI-APLSuite**: Provides entries for APL components and APL algorithm.
-        > _TBD_
+        > [https://github.com/Jiarui0923/EasyAPI-APLSuite](https://github.com/Jiarui0923/EasyAPI-APLSuite)
    - **EasyAPI-NCBIBLAST**: Provides entries for NCBI-API based BLAST service.
         > [https://github.com/Jiarui0923/EasyAPI-NCBIBLAST](https://github.com/Jiarui0923/EasyAPI-NCBIBLAST)
 2. **EasyAccess**: Seamlessly connect to and interact with EasyAPI.

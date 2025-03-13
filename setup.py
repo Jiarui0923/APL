@@ -27,7 +27,7 @@ install_requires = [
     "caltable @ git+https://github.com/Jiarui0923/CalTable",
     "caltable-bio @ git+https://github.com/Jiarui0923/caltable-bio",
     "easyapi-ncbiblast @ git+https://github.com/Jiarui0923/EasyAPI-NCBIBLAST",
-    "easyapi-aplsuite",
+    "easyapi-aplsuite @ git+https://github.com/Jiarui0923/EasyAPI-APLSuite",
 ]
 
 
