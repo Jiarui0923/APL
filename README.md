@@ -16,7 +16,7 @@ These links point to supporting components, but there is no need to install them
    - **EasyAPI-APLSuite**: Provides entries for APL components and APL algorithm.
         > _TBD_
    - **EasyAPI-NCBIBLAST**: Provides entries for NCBI-API based BLAST service.
-        > _TBD_
+        > [https://github.com/Jiarui0923/EasyAPI-NCBIBLAST](https://github.com/Jiarui0923/EasyAPI-NCBIBLAST)
 2. **EasyAccess**: Seamlessly connect to and interact with EasyAPI.
    > [https://github.com/Jiarui0923/EasyAccess](https://github.com/Jiarui0923/EasyAccess)
 3. **CalTable**: A robust computational tool designed for interdisciplinary data processing.
