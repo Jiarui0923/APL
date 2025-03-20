@@ -22,12 +22,12 @@ NAME = 'APL'
 install_requires = [
     "django",
     "mongita",
-    "docflow @ git+https://github.com/Jiarui0923/DocFlow",
-    "easyapi @ git+https://github.com/Jiarui0923/EasyAPI",
-    "caltable @ git+https://github.com/Jiarui0923/CalTable",
-    "caltable-bio @ git+https://github.com/Jiarui0923/caltable-bio",
-    "easyapi-ncbiblast @ git+https://github.com/Jiarui0923/EasyAPI-NCBIBLAST",
-    "easyapi-aplsuite @ git+https://github.com/Jiarui0923/EasyAPI-APLSuite",
+    "docflow @ git+https://github.com/Jiarui0923/DocFlow@1.0.0",
+    "easyapi @ git+https://github.com/Jiarui0923/EasyAPI@1.0.1",
+    "caltable @ git+https://github.com/Jiarui0923/CalTable@2.0.8",
+    "caltable-bio @ git+https://github.com/Jiarui0923/caltable-bio@0.0.8",
+    "easyapi-ncbiblast @ git+https://github.com/Jiarui0923/EasyAPI-NCBIBLAST@0.0.1",
+    "easyapi-aplsuite @ git+https://github.com/Jiarui0923/EasyAPI-APLSuite@2.0.11",
 ]
 
 
