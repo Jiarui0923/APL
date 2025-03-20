@@ -13,12 +13,11 @@ The dashboard will be shown.
 
 ![alt](./images/quick_view/dashboard_project_view.png)
 
-It comprises 4 sections including `Projects`, `Toolbox`, `Resources`, and `Tool Market`.
+It comprises 4 sections including `Projects`, `Toolbox`, and `Resources`.
 
 - `Projects`: Each running will be stored as a project and shown here as cards
 - `Toolbox`: Each available tool will be here. And user can edit them.
 - `Resources`: Manage all computational resources (servers).
-- `Tool Market`: Search/Add shared tools.
 
 ## 2. *Add Resource
 **This step only needs to be finished once if you need to connect to external server.**
