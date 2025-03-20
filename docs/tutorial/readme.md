@@ -2,19 +2,14 @@
 
 # <img src="images/icon.png" width="64px">  Antigen Processing Likelihood Server
 
-`UPDATED: 2024/11/26, JIARUI LI`
+`UPDATED: 2024/11/26`
 
 This is a guideline for Antigen Processing Likelihood Server.
 
-The Web URL is: https://jellyroll.cs.tulane.edu/tablex/projects/
-
 Please follow these steps to start.
 
-## 1. Registration
-First, we need to register an account, please refer to account registration guideline.
-
-## 2. Quick View
-After login, the dashboard will be shown.
+## 1. Quick View
+The dashboard will be shown.
 
 ![alt](./images/quick_view/dashboard_project_view.png)
 
@@ -25,8 +20,8 @@ It comprises 4 sections including `Projects`, `Toolbox`, `Resources`, and `Tool 
 - `Resources`: Manage all computational resources (servers).
 - `Tool Market`: Search/Add shared tools.
 
-## 3. Add Resource
-**This step only needs to be finished once.**
+## 2. *Add Resource
+**This step only needs to be finished once if you need to connect to external server.**
 
 Before start, the resource required to be added first. The server connection information should be provided by service provider.
 
@@ -40,34 +35,7 @@ Then, the server should be added to your account and automatically used by each 
 
 Notice: There may be not only one resource/server. User could repeat this step to add more servers
 
-## 4. Select Tool from Market
-**This step only needs to be finished once.**
-
-Go to `Tool Market` section.
-
-![alt](./images/select_tool_from_market/tool_market.png)
-
-All shared tool is available here.
-
-We use pure APL as an example here. (Notice: `APL` is only for parameter combination step. The entire `APL pipeline` from PDB file to APL results is provided by `APL Pipeline`)
-
-First, search `APL Pipeline`
-![alt](./images/select_tool_from_market/apl_tools.png)
-
-There are different `APL Pipeline`.
-- `APL Pipeline [PDB]`: Upload PDB files and compute APL for them.
-- `APL Pipeline [RCSB]`: Download PDB from RCSB with provided PDB ID and compute APL for them.
-- `APL Pipeline [AlphaFold]`: Accept AlphaFold predicted proteins (mmCIF) files and compute APL.
-
-Click the `+` symbol at the bottom of the card can add this tool to your toolbox.
-
-Let's add `APL Pipeline [PDB]` as example. After click `+`, it will automatically redirect to the copied tool edit page.
-
-![alt](./images/select_tool_from_market/tool_edit.png)
-
-User could edit this tool here (this only edits your copy, not the tool market one).
-
-## 5. Quick Start a Tool
+## 3. Quick Start a Tool
 Then, click `dashboard` at the left-up corner, we could go back to dashboard.
 
 ![alt](./images/quick_start_tool/tool_view.png)
@@ -119,7 +87,7 @@ The next steps for data upload is optional, you could directly click `continue` 
 - Click `start` to start or customize other paramter then click `start`.
     ![alt](./images/quick_start_tool/quick_start_param_customize.png)
 
-## 6. View Result & Download
+## 4. View Result & Download
 Then, it will automatically redirect to the project page.
 ![alt](./images/project_view/project_running.png)
 The `Jobs` section will show current running project and its progress/status.

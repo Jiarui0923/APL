@@ -29,7 +29,7 @@ These links point to supporting components, but there is no need to install them
    > [https://github.com/Jiarui0923/DocFlow](https://github.com/Jiarui0923/DocFlow)
 
 ## Installation
-The APL application is depended on Python 3.12. These are the steps to install it.
+The APL application is depended on Python 3.10. These are the steps to install it.
 1. **Install Anaconda**
    To make it easier to manage the environments, we recommend to install anaconda.
 
@@ -37,7 +37,7 @@ The APL application is depended on Python 3.12. These are the steps to install i
 
    After install anaconda, please create an environment following command:
    ```bash
-   conda create -n APL python=3.12
+   conda create -n APL python=3.10
    ```
    Press enter when it asks "Proceed ([y]/n)?"  
    Then, activate the environment:
@@ -104,7 +104,8 @@ There are advanced functions which is not provided in default due to easy-to-use
    ```
 4. Install the API server using command
    ```bash
-   pip install easyapi easyapi-aplsuite --index-url https://jellyroll.cs.tulane.edu/pypi/simple/
+   pip install easyapi @ git+https://github.com/Jiarui0923/EasyAPI@1.0.1
+   pip install easyapi-aplsuite @ git+https://github.com/Jiarui0923/EasyAPI-APLSuite@2.0.11
    ```
 5. Setup the configuration files
    1. `config.json`
@@ -174,7 +175,8 @@ It can be installed following these steps:
    ```
 6. Install the API server using command
    ```bash
-   pip install easyapi easyapi-aplsuite --index-url https://jellyroll.cs.tulane.edu/pypi/simple/
+   pip install easyapi @ git+https://github.com/Jiarui0923/EasyAPI@1.0.1
+   pip install easyapi-aplsuite @ git+https://github.com/Jiarui0923/EasyAPI-APLSuite@2.0.11
    ```
 7. Setup the configuration files
    1. `config.json`
