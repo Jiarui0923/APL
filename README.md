@@ -29,7 +29,7 @@ These links point to supporting components, but there is no need to install them
    > [https://github.com/Jiarui0923/DocFlow](https://github.com/Jiarui0923/DocFlow)
 
 ## Installation
-The APL application is depended on Python 3.10. These are the steps to install it.
+The APL application is depended on Python 3.12. These are the steps to install it.
 1. **Install Anaconda**
    To make it easier to manage the environments, we recommend to install anaconda.
 
@@ -37,7 +37,7 @@ The APL application is depended on Python 3.10. These are the steps to install i
 
    After install anaconda, please create an environment following command:
    ```bash
-   conda create -n APL python=3.10
+   conda create -n APL python=3.12
    ```
    Press enter when it asks "Proceed ([y]/n)?"  
    Then, activate the environment:
