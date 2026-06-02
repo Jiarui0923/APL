@@ -9,25 +9,6 @@ Computational epitope prediction is a critical tool for exploring and understand
 
 Here, we introduce APLSuite, a comprehensive and lightweight software suite designed to streamline APL-based epitope prediction. APLSuite integrates distributed RESTful API services, a Python client for data aggregation and processing, a data science tool for efficient epitope computation, and a user-friendly graphical user interface for non-coding users. It provides a seamless and efficient pipeline for APL calculation and epitope prediction that can be finished in minutes with GPU-acceleration, which has not been implemented by existed tools. This flexible and extensible software suite is deployable on desktop and cloud environments, offering both guided and customizable workflows to meet diverse research needs in immunology research and immunotherapy development.
 
-**Supporting Components**  
-These links point to supporting components, but there is no need to install them manually. Installing APLSuite will automatically include all required packages.
-1. **EasyAPI**: Transform a wide range of algorithms to a universal RESTful API server.
-   > [https://github.com/Jiarui0923/EasyAPI](https://github.com/Jiarui0923/EasyAPI)
-   - **EasyAPI-APLSuite**: Provides entries for APL components and APL algorithm.
-        > [https://github.com/Jiarui0923/EasyAPI-APLSuite](https://github.com/Jiarui0923/EasyAPI-APLSuite)
-   - **EasyAPI-NCBIBLAST**: Provides entries for NCBI-API based BLAST service.
-        > [https://github.com/Jiarui0923/EasyAPI-NCBIBLAST](https://github.com/Jiarui0923/EasyAPI-NCBIBLAST)
-2. **EasyAccess**: Seamlessly connect to and interact with EasyAPI.
-   > [https://github.com/Jiarui0923/EasyAccess](https://github.com/Jiarui0923/EasyAccess)
-3. **CalTable**: A robust computational tool designed for interdisciplinary data processing.
-   > [https://github.com/Jiarui0923/CalTable](https://github.com/Jiarui0923/CalTable)
-   - **CalTable-Bio**: Supports better biological data view and edition for CalTable
-        > [https://github.com/Jiarui0923/caltable-bio](https://github.com/Jiarui0923/caltable-bio)
-4. **gpuCOREX**: gpuCOREX (GPU CORrelation with hydrogen EXchange protection factors) is an algorithm designed to compute comformational stability of a protein using GPUs.
-   > [https://github.com/Jiarui0923/gpuCOREX](https://github.com/Jiarui0923/gpuCOREX)
-5. **DocFlow**: Supports to create markdown documentation from Python code.
-   > [https://github.com/Jiarui0923/DocFlow](https://github.com/Jiarui0923/DocFlow)
-
 ## Installation
 The APL application is depended on Python 3.12. These are the steps to install it.
 1. **Install Anaconda**
@@ -81,6 +62,21 @@ After the first-run, you could start the APP again following these steps:
    ```
    apl
    ```
+
+## Cite
+**APLSuite (API / WebUI)**:
+1. Li, J., Carbullido, M. K., Bansal, J., Landry, S. J., & Mettu, R. R. (2026). APLSuite: An Integrated Suite for CD4+ T Cell Epitope Prediction via Antigen Processing Likelihood. arXiv preprint arXiv:2606.02462.
+    ```bibtex
+    @misc{li2026aplsuiteintegratedsuitecd4,
+        title={APLSuite: An Integrated Suite for CD4+ T Cell Epitope Prediction via Antigen Processing Likelihood}, 
+        author={Jiarui Li and Marco K. Carbullido and Jai Bansal and Samuel J. Landry and Ramgopal R. Mettu},
+        year={2026},
+        eprint={2606.02462},
+        archivePrefix={arXiv},
+        primaryClass={q-bio.BM},
+        url={https://arxiv.org/abs/2606.02462}, 
+    }
+    ```
 
 ## Potential Issues
 **After installation, it still shows `apl` not found**  
@@ -231,41 +227,22 @@ It can be installed following these steps:
     - Click `Add Resource`
     - Host is your server IP address with the port (`http://xxx.xxx.xxx.xxx:8001/`). If your deploy it on the same computer, it should be (`http://localhost:8001/`)
     - API ID and API Key is the customized one you setup in the `config.json`
-  
-## Cite
-**APLSuite (API / WebUI)**:
-1. _UnderReview_
-2. Li, J., Landry, S. J., & Mettu, R. R. (2024, December). GPU Acceleration of Conformational Stability Computation for CD4+ T-cell Epitope Prediction. In 2024 IEEE International Conference on Bioinformatics and Biomedicine (BIBM) (pp. 191-196). IEEE.
-    ```bibtex
-    @inproceedings{li2024gpu,
-    title={GPU Acceleration of Conformational Stability Computation for CD4+ T-cell Epitope Prediction},
-    author={Li, Jiarui and Landry, Samuel J and Mettu, Ramgopal R},
-    booktitle={2024 IEEE International Conference on Bioinformatics and Biomedicine (BIBM)},
-    pages={191--196},
-    year={2024},
-    organization={IEEE}
-    }
-    ```
-**APL Algorithm**:  
-1. Mettu, R. R., Charles, T., & Landry, S. J. (2016). CD4+ T-cell epitope prediction using antigen processing constraints. Journal of immunological methods, 432, 72-81.
-    ```bibtex
-    @article{mettu2016cd4+,
-    title={CD4+ T-cell epitope prediction using antigen processing constraints},
-    author={Mettu, Ramgopal R and Charles, Tysheena and Landry, Samuel J},
-    journal={Journal of immunological methods},
-    volume={432},
-    pages={72--81},
-    year={2016},
-    publisher={Elsevier}
-    }
-    ```
-2. Bhattacharya, A., Lyons, M. C., Landry, S. J., & Mettu, R. R. (2022, August). Incorporating antigen processing into CD4+ T cell epitope prediction with integer linear programming. In Proceedings of the 13th ACM International Conference on Bioinformatics, Computational Biology and Health Informatics (pp. 1-10).
-    ```bibtex
-    @inproceedings{bhattacharya2022incorporating,
-    title={Incorporating antigen processing into CD4+ T cell epitope prediction with integer linear programming},
-    author={Bhattacharya, Avik and Lyons, Molly C and Landry, Samuel J and Mettu, Ramgopal R},
-    booktitle={Proceedings of the 13th ACM International Conference on Bioinformatics, Computational Biology and Health Informatics},
-    pages={1--10},
-    year={2022}
-    }
-    ```
+
+## Supporting Components
+These links point to supporting components, but there is no need to install them manually. Installing APLSuite will automatically include all required packages.
+1. **EasyAPI**: Transform a wide range of algorithms to a universal RESTful API server.
+   > [https://github.com/Jiarui0923/EasyAPI](https://github.com/Jiarui0923/EasyAPI)
+   - **EasyAPI-APLSuite**: Provides entries for APL components and APL algorithm.
+        > [https://github.com/Jiarui0923/EasyAPI-APLSuite](https://github.com/Jiarui0923/EasyAPI-APLSuite)
+   - **EasyAPI-NCBIBLAST**: Provides entries for NCBI-API based BLAST service.
+        > [https://github.com/Jiarui0923/EasyAPI-NCBIBLAST](https://github.com/Jiarui0923/EasyAPI-NCBIBLAST)
+2. **EasyAccess**: Seamlessly connect to and interact with EasyAPI.
+   > [https://github.com/Jiarui0923/EasyAccess](https://github.com/Jiarui0923/EasyAccess)
+3. **CalTable**: A robust computational tool designed for interdisciplinary data processing.
+   > [https://github.com/Jiarui0923/CalTable](https://github.com/Jiarui0923/CalTable)
+   - **CalTable-Bio**: Supports better biological data view and edition for CalTable
+        > [https://github.com/Jiarui0923/caltable-bio](https://github.com/Jiarui0923/caltable-bio)
+4. **gpuCOREX**: gpuCOREX (GPU CORrelation with hydrogen EXchange protection factors) is an algorithm designed to compute comformational stability of a protein using GPUs.
+   > [https://github.com/Jiarui0923/gpuCOREX](https://github.com/Jiarui0923/gpuCOREX)
+5. **DocFlow**: Supports to create markdown documentation from Python code.
+   > [https://github.com/Jiarui0923/DocFlow](https://github.com/Jiarui0923/DocFlow)
